@@ -35,7 +35,9 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "import/newline-after-import": "off",
     "import/no-extraneous-dependencies": "off",
+    "react/jsx-props-no-spreading": "off",
     "no-param-reassign": "off",
+    "no-nested-ternary": "off",
     "func-names": "off",
     "import/order": [
       "error",

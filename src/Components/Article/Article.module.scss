@@ -1,0 +1,189 @@
+.article-wrapper {
+  width: 938px;
+  height: 140px;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 16px;
+  font-family: Inter-UI;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 12px;
+  animation-name: as;
+  animation-duration: 0.2s;
+}
+@keyframes as {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1;
+  }
+}
+.title {
+  color: rgba(24, 144, 255, 1);
+  font-size: 20px;
+  font-family: Inter-UI;
+  font-weight: 400;
+  line-height: 28px;
+  margin: 0;
+}
+.tag {
+  display: inline-block;
+  height: 20px;
+  color: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 0 1em;
+  border-radius: 3px;
+  align-content: center;
+}
+.tagList {
+  display: flex;
+  padding: 0;
+  gap: 10px;
+  margin-top: -15px;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+.article-header {
+  display: flex;
+  justify-content: space-between;
+}
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.name {
+  font-family: Inter-UI;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+}
+.date-name {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  width: 100px;
+}
+.createdAt {
+  color: rgba(0, 0, 0, 0.5);
+  font-family: Inter-UI;
+  font-size: 12px;
+  line-height: 22px;
+}
+.singlePage-wrapper {
+  width: 938px;
+  height: 807px;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 16px;
+  font-family: Inter-UI;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 12px;
+  margin: 20px auto;
+  position: relative;
+  animation-name: as;
+  animation-duration: 0.2s;
+}
+.like {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  width: 40px;
+  gap: 5px;
+  line-height: 28px;
+  margin-top: 5px;
+}
+.title-like {
+  display: flex;
+
+  gap: 20px;
+  line-height: 28px;
+}
+.like-button {
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-image: url(like.svg);
+  width: 16px;
+  height: 16px;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+}
+.liked {
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-color: white;
+  width: 16px;
+  height: 16px;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  background-image: url(liked.svg);
+  animation-name: like;
+  animation-duration: 0.7s;
+}
+@keyframes like {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.delete-btn {
+  border: 1px solid rgba(245, 34, 45, 1);
+  color: rgba(245, 34, 45, 1);
+  background-color: transparent;
+  width: 78.2px;
+  height: 31.1px;
+  font-family: Inter-UI;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 28px;
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+  &:hover {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+}
+.edit-btn {
+  border: 1px solid rgba(82, 196, 26, 1);
+  color: rgba(82, 196, 26, 1);
+  background-color: transparent;
+  width: 65.2px;
+  height: 31.1px;
+  font-family: Inter-UI;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 28px;
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+  &:hover {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+}
+.article-btns {
+  display: flex;
+  gap: 15px;
+  position: absolute;
+  right: 25px;
+  top: 91px;
+}

@@ -1,0 +1,91 @@
+.wrapper {
+  padding-top: 50px;
+  width: 384px;
+  height: 374px;
+  background-color: white;
+  margin: 40px auto;
+  border-radius: 10px;
+  box-shadow:
+    0px 22px 106px 0px rgba(0, 0, 0, 0.07),
+    0px 9.19px 44.28px 0px rgba(0, 0, 0, 0.0503),
+    0px 4.91px 23.68px 0px rgba(0, 0, 0, 0.0417),
+    0px 2.75px 13.27px 0px rgba(0, 0, 0, 0.035),
+    0px 1.46px 7.05px 0px rgba(0, 0, 0, 0.0283),
+    0px 0.61px 2.93px 0px rgba(0, 0, 0, 0.0197);
+  animation-name: appear;
+  animation-duration: 0.5s;
+}
+.input-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+}
+@keyframes appear {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.signHeader {
+  font-family: Roboto;
+  font-weight: lighter;
+  font-size: 20px;
+  color: rgba(38, 38, 38, 1);
+  text-align: center;
+  margin: 0;
+}
+.btn {
+  background-color: rgba(24, 144, 255, 1);
+  border: none;
+  border-radius: 10px;
+  width: 320px;
+  height: 40px;
+  color: white;
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  transition: opacity 0.2s ease;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+}
+.have-an-acc {
+  color: rgba(191, 191, 191, 1);
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 12px;
+}
+.have-an-acc span {
+  color: rgba(24, 144, 255, 1);
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 12px;
+  transition: opacity 0.3s ease;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+}
+.input-wrapper input:not(.btn) {
+  width: 320px;
+  outline: none;
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  height: 40px;
+  font-size: 16px;
+  padding-left: 10px;
+  font-weight: 400;
+  font-family: Roboto;
+}
+form p {
+  margin-top: 0;
+  color: #f11111b8;
+  font-size: 11px;
+  padding-left: 5px;
+}
