@@ -180,11 +180,15 @@ const articlesSlice = createSlice({
     onEdit: false,
     description: null,
     text: null,
-    tags: []
+    tags: [],
+    modalWindow: false
   },
   reducers: {
     setEdited(state) {
       state.onEdit = true
+    },
+    setModal(state, action) {
+      state.modalWindow = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -256,5 +260,5 @@ const articlesSlice = createSlice({
       })
   }
 })
-export const { setEdited } = articlesSlice.actions
+export const { setEdited, setModal } = articlesSlice.actions
 export default articlesSlice.reducer

@@ -1,7 +1,7 @@
 import ReactMarkdown from "react-markdown"
 import { useEffect, useState } from "react"
 import { format } from "date-fns"
-import { Spin } from "antd"
+import { Button, message, Popconfirm, Spin } from "antd"
 import { LoadingOutlined } from "@ant-design/icons"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams, Link } from "react-router-dom"
@@ -16,11 +16,19 @@ import avatar from "../Article/image.svg"
 import formatText from "../../utils/formatText"
 import classes from "../Article/Article.module.scss"
 function SinglePage() {
-  const { slug } = useParams()
-  const { article, singleRequestStatus } = useSelector((state) => state.article)
-  const { username, logged } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { slug } = useParams()
+  const confirm = () => {
+    dispatch(fetchDeleteArticle(slug))
+    navigate("/")
+    message.success("Статья удалена")
+  }
+  const cancel = () => {
+    message.error("Cancelled")
+  }
+  const { article, singleRequestStatus } = useSelector((state) => state.article)
+  const { username, logged } = useSelector((state) => state.user)
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     dispatch(fetchSingleArticle(slug))
@@ -126,16 +134,22 @@ function SinglePage() {
           </div>
           {article.author.username === username && logged && (
             <div className={classes["article-btns"]}>
-              <button
-                type="button"
-                className={classes["delete-btn"]}
-                onClick={() => {
-                  dispatch(fetchDeleteArticle(slug))
-                  navigate("/")
-                }}
+              <Popconfirm
+                title="Delete the task"
+                description="Are you sure to delete this task?"
+                onConfirm={confirm}
+                onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
+                style={{ width: "100px", height: "100px" }}
               >
-                Delete
-              </button>
+                <Button
+                  danger
+                  style={{ borderRadius: "10px", fontWeight: "600px" }}
+                >
+                  Delete
+                </Button>
+              </Popconfirm>
               <Link to={`/articles/${slug}/edit`}>
                 <button
                   type="button"
