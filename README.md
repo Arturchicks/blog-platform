@@ -1,3 +1,3 @@
 # blog-platform
 
-https://blog-platform-flame.vercel.app/
+кодд находится в ветке мастер https://blog-platform-flame.vercel.app/
