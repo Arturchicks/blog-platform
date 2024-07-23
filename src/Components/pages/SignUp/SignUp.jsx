@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useState } from "react"
+import { useSelector } from "react-redux"
 import classes from "./SignUp.module.scss"
 function SignUp({ handleClick }) {
   const schema = yup.object().shape({
@@ -25,6 +26,7 @@ function SignUp({ handleClick }) {
   const [email, setEmail] = useState(false)
   const [pass, setPass] = useState(false)
   const [username, setUsername] = useState(false)
+  const { error } = useSelector((state) => state.user)
   const onSubmit = (data) => {
     handleClick({ ...data })
   }
@@ -77,14 +79,22 @@ function SignUp({ handleClick }) {
               }}
               style={
                 ({ width: "320px" },
-                errors.username?.message && !username
+                (errors.username?.message && !username) || error
                   ? { borderColor: "#f11111b8" }
                   : null)
               }
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...register("username")}
             />
-            <p>{!username ? errors.username?.message : null}</p>
+            <p>
+              {!error
+                ? !username
+                  ? errors.username?.message
+                  : null
+                : JSON.stringify(error).includes("username")
+                  ? "username is already taken"
+                  : null}
+            </p>
           </label>
           <label
             style={{
@@ -112,10 +122,20 @@ function SignUp({ handleClick }) {
               {...register("email")}
               style={
                 ({ width: "320px" },
-                errors.email?.message ? { borderColor: "#f11111b8" } : null)
+                errors.email?.message || error
+                  ? { borderColor: "#f11111b8" }
+                  : null)
               }
             />
-            <p>{!email ? errors.email?.message : null}</p>
+            <p>
+              {!error
+                ? !email
+                  ? errors.email?.message
+                  : null
+                : JSON.stringify(error).includes("email")
+                  ? "email is already taken"
+                  : null}
+            </p>
           </label>
           <label
             style={{
@@ -212,7 +232,9 @@ function SignUp({ handleClick }) {
             className={classes.btn}
             type="submit"
             value="Create"
-            onClick={() => checkValues()}
+            onClick={() => {
+              checkValues()
+            }}
           />
           <span className={classes["have-an-acc"]}>
             Already have an account?

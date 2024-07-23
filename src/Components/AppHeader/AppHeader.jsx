@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { logOut } from "../../store/userSlice"
+import { logOut, setErr } from "../../store/userSlice"
 import classes from "./AppHeader.module.scss"
 import avatar from "./image.svg"
 
@@ -15,12 +15,20 @@ function AppHeader() {
       {!logged && (
         <div className={classes.logs}>
           <Link to="/sign-in">
-            <button type="button" className={classes["sign-in"]}>
+            <button
+              type="button"
+              className={classes["sign-in"]}
+              onClick={() => dispatch(setErr())}
+            >
               Sign In
             </button>
           </Link>
           <Link to="/sign-up">
-            <button type="button" className={classes["sign-up"]}>
+            <button
+              type="button"
+              className={classes["sign-up"]}
+              onClick={() => dispatch(setErr())}
+            >
               Sign Up
             </button>
           </Link>

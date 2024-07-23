@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 export const fetchRegister = createAsyncThunk(
   "user/registerUser",
-  async (data) => {
+  async (data, { rejectWithValue }) => {
     const { email, password, username } = data
     try {
       const response = await axios.post(
@@ -19,7 +19,10 @@ export const fetchRegister = createAsyncThunk(
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(err)
-      throw err
+      return rejectWithValue({
+        status: err.response.status,
+        statusText: err?.response?.data?.errors
+      })
     }
   }
 )
@@ -131,6 +134,9 @@ const userSlice = createSlice({
       state.username = null
       state.email = null
       state.password = null
+    },
+    setErr(state) {
+      state.error = null
     }
   },
   extraReducers: (builder) => {
@@ -148,6 +154,8 @@ const userSlice = createSlice({
         state.username = action.payload.user.username
         state.email = action.payload.user.email
         state.token = action.payload.user.token
+        state.logStatus = "loggedIn"
+        state.error = null
         sessionStorage.setItem("token", action.payload.user.token)
       })
       .addCase(fetchUpdateUser.fulfilled, (state) => {
@@ -159,7 +167,10 @@ const userSlice = createSlice({
       .addCase(fetchLoginUser.rejected, (state, action) => {
         state.error = action.payload.statusText
       })
+      .addCase(fetchRegister.rejected, (state, action) => {
+        state.error = action.payload.statusText
+      })
   }
 })
-export const { setUser, removeUser, setLog, logOut } = userSlice.actions
+export const { setUser, removeUser, setLog, logOut, setErr } = userSlice.actions
 export default userSlice.reducer
