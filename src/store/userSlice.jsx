@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit"
 import axios from "axios"
 export const fetchRegister = createAsyncThunk(
   "user/registerUser",
@@ -58,7 +58,7 @@ export const fetchLoginUser = createAsyncThunk(
 )
 export const fetchUpdateUser = createAsyncThunk(
   "user/updateUser",
-  async (data) => {
+  async (data, { rejectWithValue }) => {
     const { username, email, password, url } = data
     const token = sessionStorage.getItem("token")
     try {
@@ -80,7 +80,10 @@ export const fetchUpdateUser = createAsyncThunk(
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(err)
-      throw err
+      return rejectWithValue({
+        status: err.response.status,
+        statusText: err?.response?.data?.errors
+      })
     }
   }
 )
@@ -129,6 +132,10 @@ const userSlice = createSlice({
       state.username = action.payload.username
       state.email = action.payload.email
       state.password = action.payload.password
+      console.log(action)
+    },
+    setUserUpdated(state) {
+      state.userUpdated = "userUpdated"
     },
     removeUser(state) {
       state.username = null
@@ -160,6 +167,7 @@ const userSlice = createSlice({
       })
       .addCase(fetchUpdateUser.fulfilled, (state) => {
         state.userUpdated = "fulfilled"
+        state.error = null
       })
       .addCase(fetchUpdateUser.pending, (state) => {
         state.userUpdated = "pending"
@@ -170,7 +178,12 @@ const userSlice = createSlice({
       .addCase(fetchRegister.rejected, (state, action) => {
         state.error = action.payload.statusText
       })
+      .addCase(fetchUpdateUser.rejected, (state, action) => {
+        state.error = action.payload.statusText
+        state.userUpdated = "rejected"
+      })
   }
 })
-export const { setUser, removeUser, setLog, logOut, setErr } = userSlice.actions
+export const { setUser, removeUser, setLog, logOut, setErr, setUserUpdated } =
+  userSlice.actions
 export default userSlice.reducer

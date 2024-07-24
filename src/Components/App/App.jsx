@@ -22,8 +22,8 @@ export default function App() {
   const { logged, userUpdated } = useSelector((state) => state.user)
   const [offset, setOffset] = useState(0)
   const location = useLocation()
-  // eslint-disable-next-line react/no-unstable-nested-components, react/function-component-definition
-  const PrivateRoute = ({ children }) => {
+  // eslint-disable-next-line react/no-unstable-nested-components
+  function PrivateRoute({ children }) {
     return logged ? children : <Navigate to="/sign-in" />
   }
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function App() {
         <Route path="/sign-up" element={<SignUpForm />} />
         {logged && (
           <>
-            <Route path="/edit-profile" index element={<EditProfileForm />} />
+            <Route path="/edit-profile" element={<EditProfileForm />} />
             <Route path="/articles/:slug/edit" element={<EditArticleForm />} />
           </>
         )}

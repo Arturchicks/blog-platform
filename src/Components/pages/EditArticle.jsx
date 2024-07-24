@@ -27,16 +27,15 @@ function CreateArticle({ handleClick }) {
     resolver: yupResolver(schema)
   })
   const { slug } = useParams()
-
   const dispatch = useDispatch()
+  const onSubmit = (data) => {
+    data.tagList = tagList
+    handleClick({ ...data, slug })
+  }
   const handleTagChange = (index, value) => {
     const newTagList = [...tagList]
     newTagList[index] = value
     setTags(newTagList)
-  }
-  const onSubmit = (data) => {
-    data.tagList = tagList
-    handleClick({ ...data, slug })
   }
   useEffect(() => {
     dispatch(fetchSingleArticle(slug))
@@ -71,7 +70,6 @@ function CreateArticle({ handleClick }) {
                 ({ width: "320px" },
                 errors.title?.message ? { borderColor: "#f11111b8" } : null)
               }
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...register("title")}
               onChange={(e) => {
                 setArticleName(e.target.value)
@@ -99,7 +97,6 @@ function CreateArticle({ handleClick }) {
                     : e.preventDefault()
                 }
               }}
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...register("description")}
               style={
                 ({ width: "320px" },
@@ -135,7 +132,6 @@ function CreateArticle({ handleClick }) {
                       : e.preventDefault()
                   }
                 }}
-                // eslint-disable-next-line react/jsx-props-no-spreading
                 {...register("text")}
                 onChange={(e) => {
                   setBody(e.target.value)
@@ -153,7 +149,6 @@ function CreateArticle({ handleClick }) {
               fontFamily: "Roboto",
               fontSize: "14px",
               height: "57px",
-              // width: "320px",
               display: "inline-block",
               color: "rgba(38, 38, 38, 1)"
             }}
@@ -177,7 +172,6 @@ function CreateArticle({ handleClick }) {
                           e.preventDefault()
                         }
                       }}
-                      {...register(`tagList[${index}]`)}
                       onChange={(e) => {
                         handleTagChange(index, e.target.value)
                       }}

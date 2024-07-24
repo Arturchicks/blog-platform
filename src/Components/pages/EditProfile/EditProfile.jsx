@@ -2,12 +2,18 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { setUserUpdated, setErr } from "../../../store/userSlice"
 import classes from "./EditProfile.module.scss"
 function EditProfile({ handleClick }) {
   const schema = yup.object().shape({
     username: yup.string().required(),
     email: yup.string().email().required(),
-    newPassword: yup.string().min(6).max(15).required()
+    newPassword: yup
+      .string()
+      .min(6, "New password must be at least 6 characters")
+      .max(15)
+      .required()
   })
   const {
     register,
@@ -19,6 +25,8 @@ function EditProfile({ handleClick }) {
   const [email, setEmail] = useState(false)
   const [pass, setPass] = useState(false)
   const [username, setUsername] = useState(false)
+  const { error } = useSelector((state) => state.user)
+  const dispatch = useDispatch()
   const onSubmit = (data) => {
     handleClick({ ...data })
   }
@@ -68,16 +76,26 @@ function EditProfile({ handleClick }) {
                 if (e.key === " ") {
                   e.preventDefault()
                 }
+                dispatch(setErr())
               }}
               style={
                 ({ width: "320px" },
-                errors.username?.message && !username
+                (errors.username?.message && !username) ||
+                JSON.stringify(error).includes("username")
                   ? { borderColor: "#f11111b8" }
                   : null)
               }
               {...register("username")}
             />
-            <p>{!username ? errors.username?.message : null}</p>
+            <p>
+              {!error
+                ? !username
+                  ? errors.username?.message
+                  : null
+                : JSON.stringify(error).includes("username")
+                  ? "username is already taken"
+                  : null}
+            </p>
           </label>
           <label
             style={{
@@ -100,14 +118,25 @@ function EditProfile({ handleClick }) {
                 if (e.key === " ") {
                   e.preventDefault()
                 }
+                dispatch(setErr())
               }}
               {...register("email")}
               style={
                 ({ width: "320px" },
-                errors.email?.message ? { borderColor: "#f11111b8" } : null)
+                errors.email?.message || JSON.stringify(error).includes("email")
+                  ? { borderColor: "#f11111b8" }
+                  : null)
               }
             />
-            <p>{!email ? errors.email?.message : null}</p>
+            <p>
+              {!error
+                ? !email
+                  ? errors.email?.message
+                  : null
+                : JSON.stringify(error).includes("email")
+                  ? "email is already taken"
+                  : null}
+            </p>
           </label>
           <label
             style={{
@@ -172,6 +201,7 @@ function EditProfile({ handleClick }) {
             value="Save"
             onClick={() => {
               checkValues()
+              dispatch(setUserUpdated())
             }}
           />
         </div>

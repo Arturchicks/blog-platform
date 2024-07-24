@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { setUser } from "../../../store/userSlice"
 import classes from "./SignIn.module.scss"
 export default function SignIn({ handleClick }) {
   const schema = yup.object().shape({
@@ -19,6 +20,8 @@ export default function SignIn({ handleClick }) {
   })
   const [email, setEmail] = useState(false)
   const [pass, setPass] = useState(false)
+  const [emailValue, setEmailValue] = useState("")
+  const dispatch = useDispatch()
   const { error } = useSelector((state) => state.user)
   const onSubmit = (data) => {
     handleClick(data)
@@ -60,6 +63,7 @@ export default function SignIn({ handleClick }) {
                 if (e.key === " ") {
                   e.preventDefault()
                 }
+                setEmailValue(e.target.value)
               }}
               style={
                 ({ width: "320px" },
@@ -102,7 +106,6 @@ export default function SignIn({ handleClick }) {
                   ? { borderColor: "#f11111b8" }
                   : null)
               }
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...register("password")}
             />
             <p>

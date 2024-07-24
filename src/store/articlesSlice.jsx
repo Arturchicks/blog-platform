@@ -189,6 +189,10 @@ const articlesSlice = createSlice({
     },
     setModal(state, action) {
       state.modalWindow = action.payload
+    },
+    updateTags(state, action) {
+      state.tags = action.payload.tagList
+      console.log(action)
     }
   },
   extraReducers: (builder) => {
@@ -260,5 +264,5 @@ const articlesSlice = createSlice({
       })
   }
 })
-export const { setEdited, setModal } = articlesSlice.actions
+export const { setEdited, setModal, updateTags } = articlesSlice.actions
 export default articlesSlice.reducer

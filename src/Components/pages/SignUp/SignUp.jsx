@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { setErr } from "../../../store/userSlice"
 import classes from "./SignUp.module.scss"
 function SignUp({ handleClick }) {
   const schema = yup.object().shape({
@@ -26,6 +27,7 @@ function SignUp({ handleClick }) {
   const [email, setEmail] = useState(false)
   const [pass, setPass] = useState(false)
   const [username, setUsername] = useState(false)
+  const dispatch = useDispatch()
   const { error } = useSelector((state) => state.user)
   const onSubmit = (data) => {
     handleClick({ ...data })
@@ -76,10 +78,12 @@ function SignUp({ handleClick }) {
                 if (e.key === " ") {
                   e.preventDefault()
                 }
+                dispatch(setErr())
               }}
               style={
                 ({ width: "320px" },
-                (errors.username?.message && !username) || error
+                (errors.username?.message && !username) ||
+                JSON.stringify(error).includes("username")
                   ? { borderColor: "#f11111b8" }
                   : null)
               }
@@ -117,12 +121,13 @@ function SignUp({ handleClick }) {
                 if (e.key === " ") {
                   e.preventDefault()
                 }
+                dispatch(setErr())
               }}
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...register("email")}
               style={
                 ({ width: "320px" },
-                errors.email?.message || error
+                errors.email?.message || JSON.stringify(error).includes("email")
                   ? { borderColor: "#f11111b8" }
                   : null)
               }
