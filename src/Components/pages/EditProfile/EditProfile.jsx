@@ -26,6 +26,8 @@ function EditProfile({ handleClick }) {
   const [pass, setPass] = useState(false)
   const [username, setUsername] = useState(false)
   const { error } = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user.username)
+  const mail = useSelector((state) => state.user.email)
   const dispatch = useDispatch()
   const onSubmit = (data) => {
     handleClick({ ...data })
@@ -72,6 +74,7 @@ function EditProfile({ handleClick }) {
               placeholder="Username"
               id="user"
               name="username"
+              defaultValue={user}
               onKeyDown={(e) => {
                 if (e.key === " ") {
                   e.preventDefault()
@@ -114,6 +117,7 @@ function EditProfile({ handleClick }) {
               placeholder="Email address"
               name="email"
               id="email"
+              defaultValue={mail}
               onKeyDown={(e) => {
                 if (e.key === " ") {
                   e.preventDefault()

@@ -179,8 +179,8 @@ function CreateArticle({ handleClick }) {
                     <button
                       type="button"
                       className={classes["delete-btn"]}
-                      onClick={(e) => {
-                        tagList.splice(e[index], 1)
+                      onClick={() => {
+                        tagList.splice(index, 1)
                         setTags([...tagList])
                       }}
                     >

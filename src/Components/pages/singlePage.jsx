@@ -143,7 +143,10 @@ function SinglePage() {
                 cancelText="No"
                 style={{ width: "100px", height: "100px" }}
               >
-                <Button danger style={{ borderRadius: "10px" }}>
+                <Button
+                  danger
+                  style={{ borderRadius: "10px", fontFamily: "Inter-UI" }}
+                >
                   Delete
                 </Button>
               </Popconfirm>
